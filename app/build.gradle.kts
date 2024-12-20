@@ -19,6 +19,12 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    configurations.all {
+        resolutionStrategy {
+            force ("androidx.core:core:1.13.1")
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false

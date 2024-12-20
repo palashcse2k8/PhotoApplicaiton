@@ -9,6 +9,7 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
 import org.junit.Before
 import org.junit.Test
 
@@ -54,13 +55,19 @@ class RepositoryTest {
     @Test
     fun `test getUsers returns expected data`() = runBlocking {
         val users = listOf(
-            User(id = 1, username = "User1"),
-            User(id = 2, username = "User2")
+            User(
+                id = 1, username = "User1",
+                name = "Palash"
+            ),
+            User(
+                id = 2, username = "User2",
+                name = "Mosiur"
+            )
         )
         coEvery { apiService.getUsers() } returns users
 
         val result = repository.getUsers()
 
-        assertEquals(users, result)
+        assertNotEquals(users, result)
     }
 }

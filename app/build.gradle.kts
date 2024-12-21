@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id("jacoco")
 }
 
 android {
@@ -32,6 +33,12 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+        buildTypes {
+            getByName("debug") {
+                enableUnitTestCoverage = true
+                enableAndroidTestCoverage = true
+            }
         }
     }
     compileOptions {
@@ -64,11 +71,18 @@ dependencies {
     kapt(libs.hilt.android.compiler)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.fragment.ktx)
+    implementation (libs.glide)
+    annotationProcessor (libs.compiler)
+
+    //for testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit.v121)
     androidTestImplementation(libs.androidx.espresso.core.v361)
     testImplementation(libs.mockk)
+    testImplementation (libs.mockito.mockito.core)
     testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation (libs.androidx.core.testing)
+    testImplementation (libs.truth)
 
 }
 

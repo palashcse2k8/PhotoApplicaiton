@@ -1,73 +1,64 @@
-package com.example.photoapp
+package com.example.photoapp.repository
 
 import com.example.photoapp.models.Album
 import com.example.photoapp.models.Photo
 import com.example.photoapp.models.User
 import com.example.photoapp.network.ApiService
-import com.example.photoapp.repository.Repository
-import io.mockk.coEvery
-import io.mockk.mockk
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotEquals
 import org.junit.Before
 import org.junit.Test
+import org.mockito.Mockito.*
+
 
 class RepositoryTest {
-    private lateinit var apiService: ApiService
+
     private lateinit var repository: Repository
+    private val mockApiService: ApiService = mock(ApiService::class.java)
 
     @Before
     fun setUp() {
-        apiService = mockk()
-        repository = Repository(apiService)
+        repository = Repository(mockApiService)
     }
 
     @Test
-    fun `test getPhotos returns expected data`() = runBlocking {
-        // Mocked API response
-        val photos = listOf(
-            Photo(albumId = 1, id = 1, title = "Photo 1", url = "url1", thumbnailUrl = "thumbnailUrl1"),
-            Photo(albumId = 2, id = 2, title = "Photo 2", url = "url2", thumbnailUrl = "thumbnailUrl2")
+    fun `getPhotos should fetch photos from API`(): Unit = runBlocking {
+        val mockPhotos = listOf(
+            Photo(
+                id = 1, albumId = 1, title = "Photo 1", thumbnailUrl = "url1",
+                url = TODO()
+            )
         )
-        coEvery { apiService.getPhotos() } returns photos
+        `when`(mockApiService.getPhotos()).thenReturn(mockPhotos)
 
-        // Call the repository method
         val result = repository.getPhotos()
 
-        // Assert the results
-        assertEquals(photos, result)
+        assertEquals(mockPhotos, result)
+        verify(mockApiService).getPhotos()
     }
 
     @Test
-    fun `test getAlbums returns expected data`() = runBlocking {
-        val albums = listOf(
-            Album(userId = 1, id = 1, title = "Album 1"),
-            Album(userId = 2, id = 2, title = "Album 2")
-        )
-        coEvery { apiService.getAlbums() } returns albums
+    fun `getAlbums should fetch albums from API`(): Unit = runBlocking {
+        val mockAlbums = listOf(Album(id = 1, userId = 1, title = "Album 1"))
+        `when`(mockApiService.getAlbums()).thenReturn(mockAlbums)
 
         val result = repository.getAlbums()
 
-        assertEquals(albums, result)
+        assertEquals(mockAlbums, result)
+        verify(mockApiService).getAlbums()
     }
 
     @Test
-    fun `test getUsers returns expected data`() = runBlocking {
-        val users = listOf(
-            User(
-                id = 1, username = "User1",
-                name = "Palash"
-            ),
-            User(
-                id = 2, username = "User2",
-                name = "Mosiur"
-            )
-        )
-        coEvery { apiService.getUsers() } returns users
+    fun `getUsers should fetch users from API`(): Unit = runBlocking {
+        val mockUsers = listOf(User(
+            id = 1, username = "User 1",
+            name = TODO()
+        ))
+        `when`(mockApiService.getUsers()).thenReturn(mockUsers)
 
         val result = repository.getUsers()
 
-        assertNotEquals(users, result)
+        assertEquals(mockUsers, result)
+        verify(mockApiService).getUsers()
     }
 }

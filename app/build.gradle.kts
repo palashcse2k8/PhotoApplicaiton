@@ -22,7 +22,7 @@ android {
 
     configurations.all {
         resolutionStrategy {
-            force ("androidx.core:core:1.13.1")
+            force("androidx.core:core:1.13.1")
         }
     }
 
@@ -71,19 +71,35 @@ dependencies {
     kapt(libs.hilt.android.compiler)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.fragment.ktx)
-    implementation (libs.glide)
-    annotationProcessor (libs.compiler)
+    implementation(libs.glide)
+    annotationProcessor(libs.compiler)
 
     //for testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit.v121)
     androidTestImplementation(libs.androidx.espresso.core.v361)
     testImplementation(libs.mockk)
-    testImplementation (libs.mockito.mockito.core)
+    testImplementation(libs.mockito.mockito.core)
     testImplementation(libs.kotlinx.coroutines.test)
-    testImplementation (libs.androidx.core.testing)
-    testImplementation (libs.truth)
+    testImplementation(libs.androidx.core.testing)
+    testImplementation(libs.truth)
 
+    // JUnit 5 dependencies
+    testImplementation(libs.junit.jupiter.api)
+    testImplementation(libs.junit.jupiter.engine)
+
+    // Mockito dependencies
+    testImplementation(libs.mockito.core.v4xx)
+    testImplementation(libs.mockito.kotlin)
+
+    // Espresso dependencies for UI testing
+    testImplementation(libs.androidx.espresso.core.v3xx)
+
+    // Core testing support for LiveData
+    testImplementation(libs.androidx.core.testing.v2xx)
+
+    // Android test dependencies
+    androidTestImplementation(libs.androidx.core)
 }
 
 // Allow references to generated code

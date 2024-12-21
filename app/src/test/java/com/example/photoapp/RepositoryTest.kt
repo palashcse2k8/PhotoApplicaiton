@@ -26,7 +26,7 @@ class RepositoryTest {
         val mockPhotos = listOf(
             Photo(
                 id = 1, albumId = 1, title = "Photo 1", thumbnailUrl = "url1",
-                url = TODO()
+                url = "url2"
             )
         )
         `when`(mockApiService.getPhotos()).thenReturn(mockPhotos)
@@ -52,7 +52,7 @@ class RepositoryTest {
     fun `getUsers should fetch users from API`(): Unit = runBlocking {
         val mockUsers = listOf(User(
             id = 1, username = "User 1",
-            name = TODO()
+            name = "Palash"
         ))
         `when`(mockApiService.getUsers()).thenReturn(mockUsers)
 
